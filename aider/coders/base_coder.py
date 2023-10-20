@@ -100,6 +100,7 @@ class Coder:
         stream=True,
         use_git=True,
         voice_language=None,
+        aider_ignore_file=None,
     ):
         if not fnames:
             fnames = []
@@ -154,7 +155,7 @@ class Coder:
 
         if use_git:
             try:
-                self.repo = GitRepo(self.io, fnames, git_dname)
+                self.repo = GitRepo(self.io, fnames, git_dname, aider_ignore_file)
                 self.root = self.repo.root
             except FileNotFoundError:
                 self.repo = None
@@ -193,7 +194,7 @@ class Coder:
 
         self.summarizer = ChatSummary(models.Model.weak_model())
         self.summarizer_thread = None
-        self.summarized_done_messages = None
+        self.summarized_done_messages = []
 
         # validate the functions jsonschema
         if self.functions:
@@ -376,7 +377,7 @@ class Coder:
         self.summarizer_thread = None
 
         self.done_messages = self.summarized_done_messages
-        self.summarized_done_messages = None
+        self.summarized_done_messages = []
 
     def move_back_cur_messages(self, message):
         self.done_messages += self.cur_messages

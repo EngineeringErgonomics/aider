@@ -1,5 +1,18 @@
 # Release history
 
+### main branch
+
+- Added support for `.aiderignore` file, which instructs aider to ignore parts of the git repo.
+- `/run` and `/git` now accept full shell commands, like: `/run (cd subdir; ls)`
+- New `--commit` cmd line arg, which just commits all pending changes with a sensible commit message geneated by gpt-3.5.
+- Added universal ctags and multiple architectures to the [aider docker image](https://aider.chat/docs/docker.html)
+
+### v0.14.2
+
+- Easily [run aider from a docker image](https://aider.chat/docs/docker.html)
+- Fixed bug with chat history summarization.
+- Fixed bug if `soundfile` package not available.
+
 ### v0.14.1
 
 - /add and /drop handle absolute filenames and quoted filenames

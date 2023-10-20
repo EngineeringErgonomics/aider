@@ -1,6 +1,5 @@
 import json
 import re
-import shlex
 import subprocess
 import sys
 from pathlib import Path
@@ -210,6 +209,10 @@ class Commands:
             or last_commit.hexsha[:7] != self.coder.last_aider_commit_hash
         ):
             self.io.tool_error("The last commit was not made by aider in this chat session.")
+            self.io.tool_error(
+                "You could try `/git reset --hard HEAD^` but be aware that this is a destructive"
+                " command!"
+            )
             return
         self.coder.repo.repo.git.reset("--hard", "HEAD~1")
         self.io.tool_output(
@@ -229,6 +232,7 @@ class Commands:
 
         if not self.coder.last_aider_commit_hash:
             self.io.tool_error("No previous aider commit found.")
+            self.io.tool_error("You could try `/git diff` or `/git diff HEAD^`.")
             return
 
         commits = f"{self.coder.last_aider_commit_hash}~1"
@@ -365,10 +369,15 @@ class Commands:
         "Run a git command"
         combined_output = None
         try:
-            parsed_args = shlex.split("git " + args)
+            args = "git " + args
             env = dict(GIT_EDITOR="true", **subprocess.os.environ)
             result = subprocess.run(
-                parsed_args, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, env=env
+                args,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                text=True,
+                env=env,
+                shell=True,
             )
             combined_output = result.stdout
         except Exception as e:
@@ -383,9 +392,8 @@ class Commands:
         "Run a shell command and optionally add the output to the chat"
         combined_output = None
         try:
-            parsed_args = shlex.split(args)
             result = subprocess.run(
-                parsed_args, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True
+                args, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, shell=True
             )
             combined_output = result.stdout
         except Exception as e:
