@@ -319,10 +319,10 @@ class Commands:
                     self.io.tool_output(f"Added {matched_file} to the chat")
                     added_fnames.append(matched_file)
 
-        if self.coder.repo and git_added:
-            git_added = " ".join(git_added)
-            commit_message = f"aider: Added {git_added}"
-            self.coder.repo.commit(message=commit_message)
+        # if self.coder.repo and git_added:
+        #     git_added = " ".join(git_added)
+        #     commit_message = f"aider: Added {git_added}"
+        #     self.coder.repo.commit(message=commit_message)
 
         if not added_fnames:
             return

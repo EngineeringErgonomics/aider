@@ -8,6 +8,7 @@ Generate a *SHORT* 1 line, 1 sentence commit message that describes the purpose 
 The commit message MUST be in the past tense.
 It must describe the changes *which have been made* in the diffs!
 Reply with JUST the commit message, without quotes, comments, questions, etc!
+The commit message should ONLY include the description of changes NEVER "aider:" and NEVER our chat history.
 """
 
 # COMMANDS

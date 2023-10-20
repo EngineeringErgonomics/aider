@@ -883,13 +883,17 @@ class Coder:
 
     def auto_commit(self, edited):
         context = self.get_context_from_history(self.cur_messages)
-        res = self.repo.commit(fnames=edited, context=context, prefix="aider: ")
+        res = self.repo.commit(fnames=edited, context=context, prefix="5650222 - ")
         if res:
             commit_hash, commit_message = res
             self.last_aider_commit_hash = commit_hash
 
+            # lines = commit_message.split('\n')
+            # first_line = lines[0]
+
             return self.gpt_prompts.files_content_gpt_edits.format(
                 hash=commit_hash,
+                # message=first_line,
                 message=commit_message,
             )
 
