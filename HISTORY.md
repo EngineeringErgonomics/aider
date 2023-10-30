@@ -2,10 +2,21 @@
 
 ### main branch
 
+### v0.16.0
+
+- [Improved repository map using tree-sitter](https://aider.chat/docs/repomap.html)
+- Switched from "edit block" to "search/replace block", which reduced malformed edit blocks. [Benchmarked](https://aider.chat/docs/benchmarks.html) at 66.2%, no regression.
+- Improved handling of malformed edit blocks targetting multiple edits to the same file. [Benchmarked](https://aider.chat/docs/benchmarks.html) at 65.4%, no regression.
+- Bugfix to properly handle malformed `/add` wildcards.
+
+
+### v0.15.0
+
 - Added support for `.aiderignore` file, which instructs aider to ignore parts of the git repo.
-- `/run` and `/git` now accept full shell commands, like: `/run (cd subdir; ls)`
 - New `--commit` cmd line arg, which just commits all pending changes with a sensible commit message geneated by gpt-3.5.
 - Added universal ctags and multiple architectures to the [aider docker image](https://aider.chat/docs/docker.html)
+- `/run` and `/git` now accept full shell commands, like: `/run (cd subdir; ls)`
+- Restored missing `--encoding` cmd line switch.
 
 ### v0.14.2
 
