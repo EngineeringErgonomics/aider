@@ -5,9 +5,10 @@ import tiktoken
 from .model import Model
 
 known_tokens = {
-    "gpt-3.5-turbo-1106": 16,
+    "gpt-3.5-turbo": 4,
     "gpt-4": 8,
     "gpt-4-1106-preview": 128,
+    "gpt-3.5-turbo-1106": 16,
 }
 
 
@@ -28,7 +29,7 @@ class OpenAIModel(Model):
         if tokens is None:
             raise ValueError(f"Unknown context window size for model: {name}")
 
-        self.max_context_tokens = tokens * 1024 if self.name != "gpt-4-1106-preview" else tokens * 1000
+        self.max_context_tokens = tokens * 1024
         self.tokenizer = tiktoken.encoding_for_model(name)
 
         if self.is_gpt4():
@@ -52,7 +53,10 @@ class OpenAIModel(Model):
             self.edit_format = "whole"
             self.always_available = True
 
-            if tokens == 4:
+            if self.name == "gpt-3.5-turbo-1106":
+                self.prompt_price = 0.001
+                self.completion_price = 0.002
+            elif tokens == 4:
                 self.prompt_price = 0.0015
                 self.completion_price = 0.002
             elif tokens == 16:

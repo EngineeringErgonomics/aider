@@ -274,7 +274,7 @@ class Commands:
         return res
 
     def cmd_add(self, args):
-        "Add matching files to the chat session using glob patterns"
+        "Add files to the chat so GPT can edit them or review them in detail"
 
         added_fnames = []
         git_added = []
@@ -305,6 +305,7 @@ class Commands:
 
         for matched_file in all_matched_files:
             abs_file_path = self.coder.abs_root_path(matched_file)
+            rel_path = self.coder.get_rel_fname(matched_file)
 
             if not abs_file_path.startswith(self.coder.root):
                 self.io.tool_error(
@@ -312,9 +313,13 @@ class Commands:
                 )
                 continue
 
-            if self.coder.repo and matched_file not in git_files:
-                self.coder.repo.repo.git.add(abs_file_path)
-                git_added.append(matched_file)
+            if self.coder.repo and rel_path not in git_files:
+                try:
+                    self.coder.repo.repo.git.add(abs_file_path)
+                    git_added.append(matched_file)
+                except git.exc.GitCommandError as e:
+                    self.io.tool_error(f"Unable to add {matched_file}: {str(e)}")
+                    continue
 
             if abs_file_path in self.coder.abs_fnames:
                 self.io.tool_error(f"{matched_file} is already in the chat")
@@ -350,7 +355,7 @@ class Commands:
                 yield Completion(fname, start_position=-len(partial))
 
     def cmd_drop(self, args):
-        "Remove matching files from the chat session"
+        "Remove files from the chat session to free up context space"
 
         if not args.strip():
             self.io.tool_output("Dropping all files from the chat session.")
@@ -423,7 +428,7 @@ class Commands:
         sys.exit()
 
     def cmd_ls(self, args):
-        "List all known files and those included in the chat session"
+        "List all known files and indicate which are included in the chat session"
 
         files = self.coder.get_all_relative_files()
 
