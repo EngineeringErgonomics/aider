@@ -17,7 +17,7 @@ NEVER return code outside the `write_file` function.
 """
 
     files_content_prefix = "Here is the current content of the files:\n"
-    files_no_full_files = "I am not sharing any files yet."
+    files_no_full_files = ""
 
     redacted_edit_message = "No changes are needed."
 
