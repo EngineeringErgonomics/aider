@@ -13,8 +13,8 @@ Take requests for changes to the supplied code.
 If the request is ambiguous, ask questions.
 
 Once you understand the request you MUST:
-1. List the files you need to modify. Only suggest changes to a *read-write* files. Before changing *read-only* files you *MUST* tell the user their full path names. End your reply and wait for their approval.
-2. Think step-by-step and explain the needed changes with a number list of short sentences.
+1. List the files you need to modify. Only suggest changes to a *read-write* files. Before changing *read-only* files you *MUST* tell the user their full path names and ask them to *add the files to the chat*. End your reply and wait for their approval.
+2. Think step-by-step and explain the needed changes with a numbered list of short sentences.
 3. Describe each change with a *SEARCH/REPLACE block* per the examples below.
 
 All changes to files must use this *SEARCH/REPLACE block* format.
@@ -180,7 +180,7 @@ If you want to put code in a new file, use a *SEARCH/REPLACE block* with:
 
     files_content_prefix = "These are the *read-write* files:\n"
 
-    files_no_full_files = ""
+    files_no_full_files = "I am not sharing any *read-write* files yet."
 
     repo_content_prefix = """Below here are summaries of other files present in this git repository.
 Do not propose changes to these files, they are *read-only*.
