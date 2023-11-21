@@ -898,7 +898,6 @@ class Coder:
 
             return self.gpt_prompts.files_content_gpt_edits.format(
                 hash=commit_hash,
-                # message=first_line,
                 message=commit_message,
             )
 

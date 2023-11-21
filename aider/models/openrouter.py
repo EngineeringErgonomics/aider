@@ -10,8 +10,8 @@ class OpenRouterModel(Model):
     def __init__(self, name):
         if name == "gpt-4":
             name = "openai/gpt-4"
-        elif name == "gpt-3.5-turbo-1106":
-            name = "openai/gpt-3.5-turbo-1106"
+        elif name == "gpt-3.5-turbo":
+            name = "openai/gpt-3.5-turbo"
         elif name == "gpt-3.5-turbo-16k":
             name = "openai/gpt-3.5-turbo-16k"
 

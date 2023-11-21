@@ -32,8 +32,8 @@ class Model:
 
     @staticmethod
     def weak_model():
-        return Model.create("gpt-3.5-turbo-1106")
+        return Model.create("gpt-3.5-turbo")
 
     @staticmethod
     def commit_message_models():
-        return [Model.create("gpt-3.5-turbo-1106"), Model.create("gpt-3.5-turbo-16k")]
+        return [Model.create("gpt-3.5-turbo"), Model.create("gpt-3.5-turbo-16k")]
